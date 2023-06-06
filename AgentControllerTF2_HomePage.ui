@@ -49,6 +49,9 @@
           <height>16777215</height>
          </size>
         </property>
+        <property name="placeholderText">
+         <string>Tina</string>
+        </property>
        </widget>
       </item>
      </layout>
@@ -87,6 +90,9 @@
              <width>200</width>
              <height>16777215</height>
             </size>
+           </property>
+           <property name="placeholderText">
+            <string>Jean-Valjean</string>
            </property>
           </widget>
          </item>
@@ -128,8 +134,14 @@
           <property name="autoFillBackground">
            <bool>false</bool>
           </property>
+          <property name="echoMode">
+           <enum>QLineEdit::Password</enum>
+          </property>
           <property name="alignment">
            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+          </property>
+          <property name="placeholderText">
+           <string>Mot de passe...</string>
           </property>
          </widget>
         </item>
