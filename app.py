@@ -1,7 +1,10 @@
 import sys
 from PyQt5 import QtWidgets, uic
+import j2l.pytactx.agent as pytactx
 
 from ui_AgentControllerTF2_Homepage import Ui_MainWindow
+
+agent = None
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -11,7 +14,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.arena = ""
         self.nickname = ""
         self.password = ""
-
+        
     def onArenaTextChanged(self, text):
         print("Arena: ", text)
         self.arena = text
@@ -23,8 +26,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.password = text
 
     def onButtonRelease(self):
-        print("GOING TO ARENA: ", self.arena, " WITH NICKNAME: ", self.nickname, "AND PASSWORD: ", self.password)
-        self.close()
+        global agent
+        print("GOING TO ARENA: ", self.arena, " WITH NICKNAME: ", self.nickname, "AND PASSWORD: ", self.password, "...")
+        agent = pytactx.AgentFrCibleAleatoire(nom=self.nickname,
+                        arene=self.arena,
+                        username="demo",
+                        password=self.password,
+                        url="mqtt.jusdeliens.com",
+                        verbosite=3)
+        while True:
+	        agent.actualiser()
 
 
 app = QtWidgets.QApplication(sys.argv)
