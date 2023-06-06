@@ -89,6 +89,10 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
+        self.lineEdit.textChanged['QString'].connect(MainWindow.onArenaTextChanged) # type: ignore
+        self.lineEdit_2.textChanged['QString'].connect(MainWindow.onNicknameTextChanged) # type: ignore
+        self.lineEdit_3.textChanged['QString'].connect(MainWindow.onPasswordTextChanged) # type: ignore
+        self.pushButton.released.connect(MainWindow.onButtonRelease) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

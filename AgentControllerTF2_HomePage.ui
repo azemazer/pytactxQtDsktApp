@@ -181,5 +181,76 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>lineEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onArenaTextChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>405</x>
+     <y>244</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>405</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit_2</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onNicknameTextChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>206</x>
+     <y>395</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>405</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit_3</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onPasswordTextChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>604</x>
+     <y>395</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>405</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>released()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onButtonRelease()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>404</x>
+     <y>505</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>405</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onArenaTextChanged(QString)</slot>
+  <slot>onNicknameTextChanged(QString)</slot>
+  <slot>onPasswordTextChanged(QString)</slot>
+  <slot>onButtonRelease()</slot>
+ </slots>
 </ui>
