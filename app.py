@@ -1,11 +1,10 @@
-import sys
+import sys, copy, couleurs, melodies
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QWidget, QAction, QTabWidget,QVBoxLayout
 from PyQt5.QtGui import QPixmap, QTransform
 from PyQt5.QtCore import pyqtSlot, QTimer, Qt
 import j2l.pytactx.agent as pytactx
-import copy
-import melodies
+
 
 from ui_AgentControllerTF2_Fullapp import Ui_MainWindow
 
@@ -526,18 +525,22 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.vieuxscore = agent.score
             agent.actualiser()
 
-            # Melodies
+            # Melodies et Couleurs
 
             if agent.vie != self.vieuxvie:
-                if self.vieuxvie == 0:
+                if self.vieuxvie == 0: #Spawn
                     agent.robot.playMelody(melodies.onSpawn)
-                elif agent.vie == 0:
+                    agent.robot.setLedAnimation(couleurs.vert)
+                elif agent.vie == 0: #Mort
                     agent.robot.playMelody(melodies.onDie)
-                else:
+                    agent.robot.setLedAnimation(couleurs.noir)
+                else: #Touche
                     agent.robot.playMelody(melodies.onHurt)
+                    agent.robot.setLedAnimation(couleurs.orange)
 
-            if agent.score != self.vieuxscore:
+            if agent.score != self.vieuxscore: #Frag
                agent.robot.playMelody(melodies.onKill)
+               agent.robot.setLedAnimation(couleurs.bleu)
                    
 
             # --- UI ---
