@@ -1,13 +1,13 @@
-import sys
-from PyQt5 import QtWidgets, uic
-from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QWidget, QAction, QTabWidget,QVBoxLayout
-from PyQt5.QtCore import pyqtSlot, QTimer, Qt
 import j2l.pytactx.agent as pytactx
 import copy
+# <<< DECLARATION DES VARIABLES >>>
 
-from ui_AgentControllerTF2_Fullapp import Ui_MainWindow
-
-agent = None
+agent = pytactx.AgentFr(nom="Alexandre",
+                        arene="numsup2223",
+                        username="demo",
+                        password=input("🔑 password: "),
+                        url="mqtt.jusdeliens.com",
+                        verbosite=3)
 
 agentVoisinsVieux = {
 }  # Dico des joueurs dans l'état avant la dernière actualisation.
@@ -403,124 +403,28 @@ def agentOnLookout():
   agentDead() # Si il meurt, il change d'état.
 
 
-class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
-    global agent
+# <<< EXEC >>>
 
-    def __init__(self, *args, obj=None, **kwargs):
-        super(MainWindow, self).__init__(*args, **kwargs)
-        self.setupUi(self)
+# Tests
+testEval()
+testPossibilites()
+testRechercheMin()
 
-        self.timer = QTimer()
-        self.timer.setTimerType(Qt.PreciseTimer)
-        self.timer.setInterval(250)
-        self.timer.timeout.connect(self.onTimerUpdate)
-        self.ui = uic.loadUi("AgentControllerTF2_FullApp.ui", self)
-        self.automode = False
+# The main boucle.
+while True:
+  agent.actualiser()
 
-        self.arena = ""
-        self.nickname = ""
-        self.password = ""
-        
-        # TAB 1: CONNECTION
-    def onArenaTextChanged(self, text):
-        print("Arena: ", text)
-        self.arena = text
-    def onNicknameTextChanged(self, text):
-        print("Nickname: ", text)
-        self.nickname = text
-    def onPasswordTextChanged(self, text):
-        print("Password: ", text)
-        self.password = text
+  if agentState == "onLookout":
+    agentOnLookout()
 
-    def onButtonRelease(self):
-        global agent
+  elif agentState == "onPursuit":
+    agentOnPursuit()
 
-        print("GOING TO ARENA: ", self.arena, " WITH NICKNAME: ", self.nickname, "AND PASSWORD: ", self.password, "...")
-        self.timer.start()
-        agent = pytactx.AgentFr(nom=self.nickname,
-                        arene=self.arena,
-                        username="demo",
-                        password=self.password,
-                        url="mqtt.jusdeliens.com",
-                        verbosite=3)
-        
-    # TAB 2: AGENT CONTROL
+  elif agentState == "onShootout":
+    agentOnShootout()
 
-    def onUpArrowPressed(self):
-        global agent
+  elif agentState == "dead":
+    agentDead()
 
-        agent.deplacer(0,-1)
-        agent.orienter(1)
-                
-    def onDownArrowPressed(self):
-        global agent
-
-        agent.deplacer(0,1)
-        agent.orienter(3)
-                
-    def onRightArrowPressed(self):
-        global agent
-
-        agent.deplacer(1,0)
-        agent.orienter(0)
-                
-    def onLeftArrowPressed(self):
-        global agent
-
-        agent.deplacer(-1,0)
-        agent.orienter(2)
-
-    def onShootToggled(self, shooting):
-        global agent
-
-        if shooting == True:
-            agent.tirer(True)
-        else:
-            agent.tirer(False)
-
-    def onAutoToggled(self, auto):
-        if auto == 1:
-            print("AUTO MODE ACTIVATED.")
-            self.automode = True
-        else:
-            print("AUTO MODE DEACTIVATED.")
-            self.automode = False
-                
-    def onTimerUpdate(self):
-        global agent
-        global agentVoisinsVieux
-
-        if ( agent != None ):
-
-            agent.actualiser()
-            if (agent.vie > self.ui.healthProgressBar.maximum() ):
-                self.ui.healthProgressBar.setMaximum(agent.vie)
-            self.ui.healthProgressBar.setValue(agent.vie)
-            if (agent.munitions > self.ui.ammoProgressBar.maximum() ):
-                self.ui.ammoProgressBar.setMaximum(agent.munitions)
-            self.ui.ammoProgressBar.setValue(agent.munitions)
-            scoreStr = "Score: " + str(agent.score)
-            self.ui.label_5.setText(scoreStr)
-
-            if self.automode:
-                if agentState == "onLookout":
-                    agentOnLookout()
-
-                elif agentState == "onPursuit":
-                    agentOnPursuit()
-
-                elif agentState == "onShootout":
-                    agentOnShootout()
-
-                elif agentState == "dead":
-                    agentDead()
-
-                # print(agent.voisins)
-                agentVoisinsVieux = copy.deepcopy(agent.voisins)
-
-
-app = QtWidgets.QApplication(sys.argv)
-
-window = MainWindow()
-window.show()
-app.exec()
+  # print(agent.voisins)
+  agentVoisinsVieux = copy.deepcopy(agent.voisins)
