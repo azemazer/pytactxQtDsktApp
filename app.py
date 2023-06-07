@@ -1,6 +1,7 @@
 import sys
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QWidget, QAction, QTabWidget,QVBoxLayout
+from PyQt5.QtGui import QPixmap, QTransform
 from PyQt5.QtCore import pyqtSlot, QTimer, Qt
 import j2l.pytactx.agent as pytactx
 import copy
@@ -430,6 +431,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.timer.timeout.connect(self.onTimerUpdate)
         self.ui = uic.loadUi("AgentControllerTF2_FullApp.ui", self)
         self.automode = False
+        self.imageRight = None
+        self.imageLeft = None
+        self.imageUp = None
+        self.imageDown = None
         
         self.vieuxvie = None
         self.vieuxscore = None
@@ -461,6 +466,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                         password=self.password,
                         url="mqtt.jusdeliens.com",
                         verbosite=3)
+        
+        self.imageRight = QPixmap("imageResource/heavy.png")
+        self.ui.agentView.setPixmap(self.imageRight)
+        self.imageDown = self.imageRight.transformed(QTransform().rotate(90))
+        self.imageLeft = self.imageRight.transformed(QTransform().rotate(180))
+        self.imageUp = self.imageRight.transformed(QTransform().rotate(270))
+
         
     # TAB 2: AGENT CONTROL
 
@@ -528,8 +540,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                agent.robot.playMelody(melodies.onKill)
                    
 
-            # UI
+            # --- UI ---
 
+            # Progress bars
             if (agent.vie > self.ui.healthProgressBar.maximum() ):
                 self.ui.healthProgressBar.setMaximum(agent.vie)
             self.ui.healthProgressBar.setValue(agent.vie)
@@ -539,6 +552,20 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             scoreStr = "Score: " + str(agent.score)
             self.ui.label_5.setText(scoreStr)
 
+            # Agent visualization
+
+            match agent.orientation:
+               case 0:
+                  self.ui.agentView.setPixmap(self.imageRight)
+               case 1:
+                  self.ui.agentView.setPixmap(self.imageUp)
+               case 2:
+                  self.ui.agentView.setPixmap(self.imageLeft)
+               case 3:
+                  self.ui.agentView.setPixmap(self.imageDown)
+
+
+            # Auto mode
             if self.automode:
                 if agentState == "onLookout":
                     agentOnLookout()
