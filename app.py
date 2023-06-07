@@ -338,7 +338,7 @@ def agentOnShootout():
   global shootoutState
   
   print(voisinIdeal + "TireDessus")
-  agent.changerCouleur(255, 255, 0)
+#   agent.changerCouleur(255, 255, 0)
 
   agentDead()
   if voisinIdeal not in agent.voisins:
@@ -356,7 +356,7 @@ def agentOnPursuit():
   global voisinIdeal
   global agentState
 
-  agent.changerCouleur(255, 0, 0) # Dans cet état, l'agent est rouge.
+#   agent.changerCouleur(255, 0, 0) # Dans cet état, l'agent est rouge.
   
   if voisinIdeal not in agent.voisins:
     agentState = "onLookout" # On repasse en mode recherche 
@@ -391,7 +391,7 @@ def agentOnLookout():
   """
   agent.tirer(False) # Lorsqu'il recherche, il ne tire pas.
   
-  agent.changerCouleur(0, 0, 255) # Lorsqu'il recherche, il est bleu foncé.
+#   agent.changerCouleur(0, 0, 255) # Lorsqu'il recherche, il est bleu fonce.
   
   agent.orienter((agent.orientation + 1) % 4) # Il tourne sur lui-même.
   
@@ -530,17 +530,21 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             if agent.vie != self.vieuxvie:
                 if self.vieuxvie == 0: #Spawn
                     agent.robot.playMelody(melodies.onSpawn)
-                    agent.robot.setLedAnimation(couleurs.vert)
+                    # agent.robot.setLedAnimation(couleurs.vert)
+                    print("Spawn")
                 elif agent.vie == 0: #Mort
                     agent.robot.playMelody(melodies.onDie)
-                    agent.robot.setLedAnimation(couleurs.noir)
+                    # agent.robot.setLedAnimation(couleurs.noir)
+                    print("Mort")
                 else: #Touche
                     agent.robot.playMelody(melodies.onHurt)
-                    agent.robot.setLedAnimation(couleurs.orange)
+                    # agent.robot.setLedAnimation(couleurs.orange)
+                    print("Touche")
 
             if agent.score != self.vieuxscore: #Frag
                agent.robot.playMelody(melodies.onKill)
-               agent.robot.setLedAnimation(couleurs.bleu)
+            #    agent.robot.setLedAnimation(couleurs.bleu)
+               print("Frag")
                    
 
             # --- UI ---
