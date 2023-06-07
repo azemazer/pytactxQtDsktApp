@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QWidget, QAc
 from PyQt5.QtCore import pyqtSlot, QTimer, Qt
 import j2l.pytactx.agent as pytactx
 import copy
+import melodies
 
 from ui_AgentControllerTF2_Fullapp import Ui_MainWindow
 
@@ -402,7 +403,20 @@ def agentOnLookout():
   agentDecisionAttaque() # Fonction permettant à l'agent de changer d'état si un ennemi tuable est repéré.
   agentDead() # Si il meurt, il change d'état.
 
+"""
 
+
+---------------------
+|                   |
+|   HERE STARTS     |
+|   LE CODE         |
+|   OF THE UI       |
+|                   |
+|-------------------|
+
+
+
+"""
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     global agent
 
@@ -416,6 +430,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.timer.timeout.connect(self.onTimerUpdate)
         self.ui = uic.loadUi("AgentControllerTF2_FullApp.ui", self)
         self.automode = False
+        
+        self.vieuxvie = None
+        self.vieuxscore = None
+        self.vieuxtirer = None
 
         self.arena = ""
         self.nickname = ""
@@ -492,7 +510,26 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         if ( agent != None ):
 
+            self.vieuxvie = agent.vie
+            self.vieuxscore = agent.score
             agent.actualiser()
+
+            # Melodies
+
+            if agent.vie != self.vieuxvie:
+                if self.vieuxvie == 0:
+                    agent.robot.playMelody(melodies.onSpawn)
+                elif agent.vie == 0:
+                    agent.robot.playMelody(melodies.onDie)
+                else:
+                    agent.robot.playMelody(melodies.onHurt)
+
+            if agent.score != self.vieuxscore:
+               agent.robot.playMelody(melodies.onKill)
+                   
+
+            # UI
+
             if (agent.vie > self.ui.healthProgressBar.maximum() ):
                 self.ui.healthProgressBar.setMaximum(agent.vie)
             self.ui.healthProgressBar.setValue(agent.vie)
