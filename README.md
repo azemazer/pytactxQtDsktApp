@@ -5,7 +5,8 @@ TF2 Pub Simulator is a desktop app which lets you control the PytactX agent with
 
 ## Required
 
-Python 3.
+Python 3
+pip install paho-mqtt pillow
 
 ## Installation
 
