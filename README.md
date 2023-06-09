@@ -5,7 +5,11 @@ TF2 Pub Simulator is a desktop app which lets you control the PytactX agent with
 
 ## Required
 
+Python 3.
+
 ## Installation
+
+No installation yet. Run "App.py".
 
 ## As a user, you can:
 
@@ -28,6 +32,7 @@ If you have access to the real-life jusdelien bots, you can hear it play various
 
 ## Autopilot
 
+Uses a FSM. Diagram [here.](https://mermaid.live/edit#pako:eNqlVF9v2jAQ_yonP07AlsSEkodJXammPXUafYAte7DIAdYSO7IdOlbx3XdJuiWAO5AWKUp0d78_ujv7ma10hixhQE-qrBMOZ1JsjCiGuzBVdfjbm-8wHL6HL7jaoqE3gXkpnpRt0w2mS8JzGz5CapVhqrrEC6YO9-vPMMFxro116TAhXUGiGZTaSie1Ah8k7CCRBxJ6IFEH4R5I5IHwnm8PhHeQQ78XbRdq6P1O5BU15l5hIdHeaesSmGm0sNYGd2ha0KH9dB2vsdS2BDJC-ZKPaAqphNPmQ5XneyJFhytnQUCun2BFQoAkuu9P9ATknSuuqrJ2u_-s7a3KPpLXR03__zDa0c6VLNH0zRSYyaq46KcFXjTUG-txvCltvTaxBVl_MBKVo54bQ2bqHi1AWlAozJ--XyZaeomWPqIL8g3zfKu1s03Ng_rk7CIBUgXTbpaXa3kt1_IVrjPN65p1u6EAKE37pDY0G6kglwpBr8HKzda9LrC8ronXCbxs3Onqntxed1th6WQ2G0ZnxoqypOlYeAuzvwfobNv-i6OzcXJOvTK9GjZgBZUImdEd3Sx8ytwWC0xZQr-ZMD9SlqoD1YnK6flerVjiTIUDVpVZd5mzZC1yS9FSKJY8s58sGfJ30Wg8Gd9MpxGfhHHA-YDtKT4J-Gga8CgOJ-M4jMf8MGC_tCaOYDTlQRxH4zCIeHjDedwQfm2SterhN4dyAhk)
 
 ## Graphics
 
