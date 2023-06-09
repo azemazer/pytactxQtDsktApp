@@ -8,7 +8,7 @@ import auto
 
 from ui_AgentControllerTF2_Fullapp import Ui_MainWindow
 
-agent = None
+
 """
 
 
@@ -24,7 +24,7 @@ agent = None
 
 """
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow): #Main window of the app
-    global agent
+    
 
     def __init__(self, *args, obj=None, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
@@ -55,6 +55,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow): #Main window of the app
         self.arena = ""
         self.nickname = ""
         self.password = ""
+
+        # Agent
+        self.agent = None
         
         # TAB 1: CONNECTION
     def onArenaTextChanged(self, text):
@@ -68,21 +71,21 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow): #Main window of the app
         self.password = text
 
     def onButtonRelease(self): # When "GO" is pressed
-        global agent
+        
 
         print("GOING TO ARENA: ", self.arena, " WITH NICKNAME: ", self.nickname, "AND PASSWORD: ", self.password, "...")
 
         self.timer.start() # Starts the timer for the while True loop simulation
 
         # Creates the agent
-        agent = pytactx.AgentFr(nom=self.nickname,
+        self.agent = pytactx.AgentFr(nom=self.nickname,
                         arene=self.arena,
                         username="demo",
                         password=self.password,
                         url="mqtt.jusdeliens.com",
                         verbosite=3)
         
-        auto.setAgent(agent) # Mandatory for the autopilot to work
+        auto.setAgent(self.agent) # Mandatory for the autopilot to work
         
         # UI Sprite setting
         self.imageRight = QPixmap("imageResource/heavy.png")
@@ -95,36 +98,36 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow): #Main window of the app
     # TAB 2: AGENT CONTROL
 
     def onUpArrowPressed(self):
-        global agent
+        
 
-        agent.deplacer(0,-1)
-        agent.orienter(1)
+        self.agent.deplacer(0,-1)
+        self.agent.orienter(1)
                 
     def onDownArrowPressed(self):
-        global agent
+        
 
-        agent.deplacer(0,1)
-        agent.orienter(3)
+        self.agent.deplacer(0,1)
+        self.agent.orienter(3)
                 
     def onRightArrowPressed(self):
-        global agent
+        
 
-        agent.deplacer(1,0)
-        agent.orienter(0)
+        self.agent.deplacer(1,0)
+        self.agent.orienter(0)
                 
     def onLeftArrowPressed(self):
-        global agent
+        
 
-        agent.deplacer(-1,0)
-        agent.orienter(2)
+        self.agent.deplacer(-1,0)
+        self.agent.orienter(2)
 
     def onShootToggled(self, shooting):
-        global agent
+        
 
         if shooting == True:
-            agent.tirer(True)
+            self.agent.tirer(True)
         else:
-            agent.tirer(False)
+            self.agent.tirer(False)
 
     def onAutoToggled(self, auto):
         if auto == 1:
@@ -135,34 +138,32 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow): #Main window of the app
             self.automode = False
                 
     def onTimerUpdate(self):
-        global agent
-        global agentVoisinsVieux
 
-        if ( agent != None ):
+        if ( self.agent != None ):
 
-            self.vieuxvie = agent.vie
-            self.vieuxscore = agent.score
-            agent.actualiser()
+            self.vieuxvie = self.agent.vie
+            self.vieuxscore = self.agent.score
+            self.agent.actualiser()
 
             # Melodies and colours for IRL robots. Note: for now, the colours are not working.
 
-            if agent.vie != self.vieuxvie:
+            if self.agent.vie != self.vieuxvie:
                 if self.vieuxvie == 0: #Spawn
-                    agent.robot.playMelody(melodies.onSpawn)
-                    # agent.robot.setLedAnimation(couleurs.vert)
+                    self.agent.robot.playMelody(melodies.onSpawn)
+                    # self.agent.robot.setLedAnimation(couleurs.vert)
                     print("Spawn")
-                elif agent.vie == 0: #Mort
-                    agent.robot.playMelody(melodies.onDie)
-                    # agent.robot.setLedAnimation(couleurs.noir)
+                elif self.agent.vie == 0: #Mort
+                    self.agent.robot.playMelody(melodies.onDie)
+                    # self.agent.robot.setLedAnimation(couleurs.noir)
                     print("Mort")
                 else: #Touche
-                    agent.robot.playMelody(melodies.onHurt)
-                    # agent.robot.setLedAnimation(couleurs.orange)
+                    self.agent.robot.playMelody(melodies.onHurt)
+                    # self.agent.robot.setLedAnimation(couleurs.orange)
                     print("Touche")
 
-            if agent.score != self.vieuxscore: #Frag
-               agent.robot.playMelody(melodies.onKill)
-            #    agent.robot.setLedAnimation(couleurs.bleu)
+            if self.agent.score != self.vieuxscore: #Frag
+               self.agent.robot.playMelody(melodies.onKill)
+            #    self.agent.robot.setLedAnimation(couleurs.bleu)
                print("Frag")
                    
 
@@ -171,22 +172,22 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow): #Main window of the app
             # Progress bars live visualization
 
             # Life
-            if (agent.vie > self.ui.healthProgressBar.maximum() ):
-                self.ui.healthProgressBar.setMaximum(agent.vie)
-            self.ui.healthProgressBar.setValue(agent.vie)
+            if (self.agent.vie > self.ui.healthProgressBar.maximum() ):
+                self.ui.healthProgressBar.setMaximum(self.agent.vie)
+            self.ui.healthProgressBar.setValue(self.agent.vie)
 
             # Ammo
-            if (agent.munitions > self.ui.ammoProgressBar.maximum() ):
-                self.ui.ammoProgressBar.setMaximum(agent.munitions)
-            self.ui.ammoProgressBar.setValue(agent.munitions)
+            if (self.agent.munitions > self.ui.ammoProgressBar.maximum() ):
+                self.ui.ammoProgressBar.setMaximum(self.agent.munitions)
+            self.ui.ammoProgressBar.setValue(self.agent.munitions)
 
             # Score
-            scoreStr = "Score: " + str(agent.score)
+            scoreStr = "Score: " + str(self.agent.score)
             self.ui.label_5.setText(scoreStr)
 
             # Agent visualization
 
-            match agent.orientation:
+            match self.agent.orientation:
                case 0:
                   self.ui.agentView.setPixmap(self.imageRight)
                case 1:
