@@ -16,7 +16,7 @@ Once connected, on the Control tab
     - Toggle shoot
     - See your HP
     - See your ammo
-    - Toggle **autopilot** *
+    - Toggle autopilot*
     - See your score
 
 The windows are also resizable.
