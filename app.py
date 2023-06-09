@@ -38,6 +38,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow): #Main window of the app
 
 
         self.ui = uic.loadUi("AgentControllerTF2_FullApp.ui", self) # Loads the UI
+        self.ui.ControlUI.setCurrentIndex(0) # Selects the correct tab on startup
         self.automode = False # Activates or deactivates autopilt
 
         # UI Sprite rotations
@@ -93,6 +94,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow): #Main window of the app
         self.imageDown = self.imageRight.transformed(QTransform().rotate(90))
         self.imageLeft = self.imageRight.transformed(QTransform().rotate(180))
         self.imageUp = self.imageRight.transformed(QTransform().rotate(270))
+
+        self.ui.ControlUI.setCurrentIndex(1)
 
         
     # TAB 2: AGENT CONTROL
