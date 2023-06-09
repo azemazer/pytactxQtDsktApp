@@ -10,6 +10,7 @@ On the "Connect tab"
     - Connect to an arena
 
 Once connected, on the Control tab
+
     - See your heavy sprite and his orientation
     - Move up, down, left or right
     - Toggle shoot
