@@ -36,7 +36,6 @@ def automode():
     elif agentState == "dead":
         agentDead()
 
-    # print(agent.voisins)
     agentVoisinsVieux = copy.deepcopy(agent.voisins)
 
 def eval(agent, voisin):
@@ -129,7 +128,6 @@ def evalPossibilites(lagent, voisins):
 
   for voisin, attributs in voisins.items():  # Pour chaque voisin...
     actualCout = eval(lagent, attributs)  # On calcule le cout du voisin.
-    # print("Coût pour ", voisin, ": ", actualCout)  # Outil de calcul du cout en temps réel
     possibilites[
       voisin] = actualCout  # Crée, dans le dictionnaire de retour, une entrée avec comme clé le nom du voisin et comme valeur son coût
 
@@ -352,7 +350,6 @@ def agentOnShootout():
   global agentState
   global shootoutState
   
-  print(voisinIdeal + "TireDessus")
 #   agent.changerCouleur(255, 255, 0)
 
   agentDead()
@@ -376,7 +373,6 @@ def agentOnPursuit():
   if voisinIdeal not in agent.voisins:
     agentState = "onLookout" # On repasse en mode recherche 
   else:
-    print(voisinIdeal + "CasseLaGueule")
     x = agent.voisins[voisinIdeal]["x"]
     y = agent.voisins[voisinIdeal]["y"]
     agent.deplacerVers(x, y)  # Se déplace vers la position du voisin idéal.

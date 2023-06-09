@@ -62,13 +62,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow): #Main window of the app
         
         # TAB 1: CONNECTION
     def onArenaTextChanged(self, text):
-        print("Arena: ", text)
         self.arena = text
     def onNicknameTextChanged(self, text):
-        print("Nickname: ", text)
         self.nickname = text
     def onPasswordTextChanged(self, text):
-        print("Password: ", text)
         self.password = text
 
     def onButtonRelease(self): # When "GO" is pressed
@@ -158,11 +155,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow): #Main window of the app
                 elif self.agent.vie == 0: #Mort
                     self.agent.robot.playMelody(melodies.onDie)
                     # self.agent.robot.setLedAnimation(couleurs.noir)
-                    print("Mort")
+                    print("Dead")
                 else: #Touche
                     self.agent.robot.playMelody(melodies.onHurt)
                     # self.agent.robot.setLedAnimation(couleurs.orange)
-                    print("Touche")
+                    print("Hurt")
 
             if self.agent.score != self.vieuxscore: #Frag
                self.agent.robot.playMelody(melodies.onKill)
