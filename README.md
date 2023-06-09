@@ -36,7 +36,11 @@ Link to the [figma model](http://www.figma.com/file/vrtPgi1lMvBhYUB0aIbdb9/Untit
 ## Authors
 
 ###Code
+
 Anything from the J2L folder: **jusdeliens.com**
+
 Rest of the code: **azemazer**
+
 Everything which references TF2 is property of **valve**
+
 Heavy top down view model: **Brokenphillip**
