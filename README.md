@@ -6,6 +6,7 @@ TF2 Pub Simulator is a desktop app which lets you control the PytactX agent with
 # As a user, you can:
 
 On the "Connect tab"
+
     - Connect to an arena
 
 Once connected, on the Control tab
