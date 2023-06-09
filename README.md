@@ -26,16 +26,14 @@ Once connected, on the Control tab
 The windows are also resizable.
 If you have access to the real-life jusdelien bots, you can hear it play various piece of TF2 music when you frag, die, respawn or take damage.
 
-## Autopilot:
+## Autopilot
 
 
-## Graphics:
+## Graphics
 
 Link to the [figma model](http://www.figma.com/file/vrtPgi1lMvBhYUB0aIbdb9/Untitled?type=design&amp;node-id=0%3A1&amp;t=xdE9ul4PewLjq9gt-1).
 
 ## Authors
-
-###Code
 
 Anything from the J2L folder: **jusdeliens.com**
 
