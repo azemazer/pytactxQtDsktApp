@@ -12,6 +12,15 @@ pip install paho-mqtt pillow
 
 No installation yet. Run "App.py".
 
+## How to use
+
+1. Go to https://play.jusdeliens.com/login/
+2. Login with your username (it can be anything), and enter the arena
+3. Click on the arena you want to join
+4. Launch app.py
+5. On the connect tab, put your username in "Nickname", the name of the arena you chose in "Arena", and "demo" in "Password"
+6. You now control the bot in the arena! Watch him beat his ennemies.
+
 ## As a user, you can:
 
 On the "Connect tab"
