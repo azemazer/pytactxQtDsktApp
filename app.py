@@ -16,35 +16,42 @@ agent = None
 |                   |
 |   HERE STARTS     |
 |   LE CODE         |
-|   OF THE UI       |
+|   OF LE UI        |
 |                   |
 |-------------------|
 
 
 
 """
-class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
+class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow): #Main window of the app
     global agent
 
     def __init__(self, *args, obj=None, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
         self.setupUi(self)
 
+        # Timer defragmenting the loop to simulate a While True condition
         self.timer = QTimer()
         self.timer.setTimerType(Qt.PreciseTimer)
         self.timer.setInterval(250)
         self.timer.timeout.connect(self.onTimerUpdate)
-        self.ui = uic.loadUi("AgentControllerTF2_FullApp.ui", self)
-        self.automode = False
+
+
+        self.ui = uic.loadUi("AgentControllerTF2_FullApp.ui", self) # Loads the UI
+        self.automode = False # Activates or deactivates autopilt
+
+        # UI Sprite rotations
         self.imageRight = None
         self.imageLeft = None
         self.imageUp = None
         self.imageDown = None
         
+        # Parameters saved in order to compare old info to new info to detect changes
         self.vieuxvie = None
         self.vieuxscore = None
         self.vieuxtirer = None
 
+        # Connection informations
         self.arena = ""
         self.nickname = ""
         self.password = ""
@@ -60,12 +67,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         print("Password: ", text)
         self.password = text
 
-    def onButtonRelease(self):
+    def onButtonRelease(self): # When "GO" is pressed
         global agent
 
         print("GOING TO ARENA: ", self.arena, " WITH NICKNAME: ", self.nickname, "AND PASSWORD: ", self.password, "...")
 
-        self.timer.start()
+        self.timer.start() # Starts the timer for the while True loop simulation
+
+        # Creates the agent
         agent = pytactx.AgentFr(nom=self.nickname,
                         arene=self.arena,
                         username="demo",
@@ -73,8 +82,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                         url="mqtt.jusdeliens.com",
                         verbosite=3)
         
-        auto.setAgent(agent)
+        auto.setAgent(agent) # Mandatory for the autopilot to work
         
+        # UI Sprite setting
         self.imageRight = QPixmap("imageResource/heavy.png")
         self.ui.agentView.setPixmap(self.imageRight)
         self.imageDown = self.imageRight.transformed(QTransform().rotate(90))
@@ -134,7 +144,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.vieuxscore = agent.score
             agent.actualiser()
 
-            # Melodies et Couleurs
+            # Melodies and colours for IRL robots. Note: for now, the colours are not working.
 
             if agent.vie != self.vieuxvie:
                 if self.vieuxvie == 0: #Spawn
@@ -158,13 +168,19 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
             # --- UI ---
 
-            # Progress bars
+            # Progress bars live visualization
+
+            # Life
             if (agent.vie > self.ui.healthProgressBar.maximum() ):
                 self.ui.healthProgressBar.setMaximum(agent.vie)
             self.ui.healthProgressBar.setValue(agent.vie)
+
+            # Ammo
             if (agent.munitions > self.ui.ammoProgressBar.maximum() ):
                 self.ui.ammoProgressBar.setMaximum(agent.munitions)
             self.ui.ammoProgressBar.setValue(agent.munitions)
+
+            # Score
             scoreStr = "Score: " + str(agent.score)
             self.ui.label_5.setText(scoreStr)
 
